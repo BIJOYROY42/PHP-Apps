@@ -1,6 +1,5 @@
 <?php
 include "controller/TaskController.php";
-session_start();
 
 $controller = new TaskController();
 

@@ -22,7 +22,12 @@ class Task{
     }
 
     public function update($is_completed){
-        $query = "UPDATE tasks SET is_completed = $is_completed WHERE id = " . $this->id;
+        // Ensure $is_completed is properly sanitized and converted to integer
+        // Default to 0 if NULL
+        $is_completed_value = ($is_completed !== null) ? (int)$is_completed : 0;
+        
+        // Make sure the SQL query has proper syntax
+        $query = "UPDATE tasks SET is_completed = $is_completed_value WHERE id = " . $this->id;
         return $this->conn->query($query); 
     }
 

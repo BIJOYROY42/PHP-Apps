@@ -11,6 +11,14 @@ class TaskController{
         $this->taskModel = new Task($db);
     }
     public function addTask($task){
+        // Validate that task is not empty before saving
+        if(empty(trim($task))) {
+            $_SESSION["message"] = "Task cannot be empty";
+            $_SESSION["message_type"] = "error";
+            header("Location:".$_SERVER['PHP_SELF']);
+            exit;
+        }
+        
         $this->taskModel->task = $task;
         $result = $this->taskModel->create(); 
         // print_r($result);

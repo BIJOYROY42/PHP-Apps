@@ -6,12 +6,19 @@
     <title>Document</title>
     <style>
         .completed{text-decoration: line-through; color: grey;}
+        .success-message {color: green; font-weight: bold;}
+        .error-message {color: red; font-weight: bold;}
     </style>
 </head>
 <body>
     <h1>Todo List</h1>
     <?php if(isset($_SESSION["message"])): ?>
-        <p><?php echo $_SESSION["message"]; ?></p>
+        <?php if(isset($_SESSION["message_type"]) && $_SESSION["message_type"] === "success"): ?>
+            <p class="success-message"><?php echo $_SESSION["message"]; ?></p>
+        <?php else: ?>
+            <p class="error-message"><?php echo $_SESSION["message"]; ?></p>
+        <?php endif; ?>
+        <?php unset($_SESSION["message"]); unset($_SESSION["message_type"]); ?>
     <?php endif; ?>
 
 

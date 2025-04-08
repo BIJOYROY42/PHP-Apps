@@ -36,8 +36,18 @@ if($_SERVER["REQUEST_METHOD"] === "GET"){
     // echo "PUT";
     $controller->updateTask($request[1]);
 }elseif($_SERVER["REQUEST_METHOD"] === "DELETE"){
-    echo "DELETE";
-    // $controller->deleteTask();
+    // Check if task ID exists in the URL
+    if(isset($request[1]) && is_numeric($request[1])) {
+        $taskId = $request[1];
+        $controller->deleteTask($taskId);
+    } else {
+        // Return error if no task ID is provided
+        header('HTTP/1.1 400 Bad Request');
+        echo json_encode([
+            "status" => "error",
+            "message" => "Task ID is required"
+        ]);
+    }
 }else{
     echo "ELSE";
     // $controller-> index();

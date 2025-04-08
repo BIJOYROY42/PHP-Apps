@@ -34,9 +34,19 @@ class TaskController{
     }
     public function deleteTask($id){
         $this->taskModel->id = $id;
-        $this->taskModel->delete();
-        header("Location:".$_SERVER['PHP_SELF']);
-        exit;
+        $result = $this->taskModel->delete();
+        if($result){
+            echo json_encode([
+                "status" => "success",
+                "message" => "Task deleted successfully",
+                "id" => $id
+            ]);
+        } else {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Failed to delete task"
+            ]);
+        }
     }
     public function index(){
         $tasks = $this->taskModel->read();

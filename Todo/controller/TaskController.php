@@ -16,22 +16,37 @@ class TaskController{
         // print_r($result);
         if($result){
             $_SESSION["message"]= "Task added successfully";
-
+            $_SESSION["message_type"] = "success";
         }else{
             $_SESSION["message"]= "Failed to add task";
+            $_SESSION["message_type"] = "error";
         }
        header("Location:".$_SERVER['PHP_SELF']);
        exit;
     }
     public function updateTask($id, $is_completed){
         $this->taskModel->id = $id;
-        $this->taskModel->update($is_completed);
+        $result = $this->taskModel->update($is_completed);
+        if($result){
+            $_SESSION["message"] = $is_completed ? "Task marked as complete" : "Task marked as incomplete";
+            $_SESSION["message_type"] = "success";
+        } else {
+            $_SESSION["message"] = "Failed to update task";
+            $_SESSION["message_type"] = "error";
+        }
         header("Location:".$_SERVER['PHP_SELF']);
         exit;
     }
     public function deleteTask($id){
         $this->taskModel->id = $id;
-        $this->taskModel->delete();
+        $result = $this->taskModel->delete();
+        if($result){
+            $_SESSION["message"] = "Task deleted successfully";
+            $_SESSION["message_type"] = "success";
+        } else {
+            $_SESSION["message"] = "Failed to delete task";
+            $_SESSION["message_type"] = "error";
+        }
         header("Location:".$_SERVER['PHP_SELF']);
         exit;
     }
